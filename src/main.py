@@ -7,7 +7,7 @@ app = FastAPI()
 
 
 @app.get("/")
-def read_root() -> dict[str, str]:
+def read_root():
     return {"message": "Hello, World!"}
 
 
