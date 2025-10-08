@@ -9,11 +9,11 @@ lint:
 	@echo "🔍 Checking uv.lock file integrity..."
 	uv lock --check
 	@echo "🔍 Running ruff linter..."
-	uv run ruff check src
+	uv run ruff check app
 	@echo "🔍 Running pylint analysis..."
-	uv run pylint src
+	uv run pylint app
 	@echo "🔍 Running mypy type checking..."
-	uv run mypy src
+	uv run mypy app
 	uv pip freeze > requirements.txt
 	@echo "🎉 ALL LINTING CHECKS PASSED SUCCESSFULLY!"
 
@@ -21,7 +21,7 @@ lint:
 fix:
 	@echo "🚀 STARTING CODE FORMATTING AND FIXING..."
 	uv run ruff format
-	uv run ruff check --fix src
+	uv run ruff check --fix app
 
 .PHONY: clean
 clean:
@@ -34,4 +34,4 @@ clean:
 run:
 	@echo "🚀 STARTING APPLICATION..."
 	@echo "🌐 Starting FastAPI server..."
-	PYTHONPATH=./ && uv run src/main.py
+	PYTHONPATH=./ && uv run app/main.py
