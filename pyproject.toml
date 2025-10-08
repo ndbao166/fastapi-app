@@ -14,6 +14,7 @@ dependencies = [
     "pydantic-settings>=2.11.0",
     "pyjwt>=2.10.1",
     "strenum>=0.4.15",
+    "types-pyyaml>=6.0.12.20250915",
 ]
 
 [dependency-groups]

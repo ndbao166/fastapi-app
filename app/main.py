@@ -1,4 +1,4 @@
-from collections.abc import Generator
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 import uvicorn
@@ -9,15 +9,13 @@ from app.core.settings import settings
 
 
 @asynccontextmanager
-async def lifespan(_: FastAPI) -> Generator[None, None, None]:
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     from app.settings import clean_app, setup_app
 
     await setup_app()
-
     logger.info(f"🚀 App has been started: http://{settings.HOST}:{settings.PORT}")
     logger.info(f"🚀 OpenAPI docs: http://{settings.HOST}:{settings.PORT}/docs")
     yield
-
     clean_app()
 
 

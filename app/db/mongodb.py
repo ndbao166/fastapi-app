@@ -29,6 +29,7 @@ async def setup_mongodb(host: str, port: int, username: str | None, password: st
         logger.exception(f"🆘 Error connecting to MongoDB: {e}")
         raise
 
+
 def close_mongodb() -> None:
     _Setting.client.close()
     logger.info("✅ MongoDB client has been closed.")

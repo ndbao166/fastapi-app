@@ -34,6 +34,7 @@ class AppConfig(BaseModel):
     @classmethod
     def from_yaml(cls, yaml_path: str) -> "AppConfig":
         import yaml
+
         try:
             with open(yaml_path, encoding="utf-8") as file:
                 yaml_data = yaml.safe_load(file)

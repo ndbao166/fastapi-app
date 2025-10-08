@@ -4,7 +4,6 @@ from app.db.mongodb import close_mongodb, setup_mongodb
 
 
 async def setup_app() -> None:
-
     # 1. Logger
     Logger.setup(settings.LOG_FOLDER_PATH, settings.LOG_FOLDER_BACKUP_PATH)
 
@@ -19,6 +18,7 @@ async def setup_app() -> None:
 
     # 3. App config
     from app.core.config import app_config
+
     _ = app_config
 
 
