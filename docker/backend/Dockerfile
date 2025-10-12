@@ -8,11 +8,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy uv from official image
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Set working directory
-WORKDIR /app
-
 # Copy folder src to docker 
-COPY src ./src
+COPY app ./app
+COPY config ./config
 # Copy uv.lock to docker
 COPY uv.lock .
 # Copy pyproject.toml to docker
@@ -22,7 +20,7 @@ COPY makefile .
 # Create empty .env file
 RUN touch .env
 
-EXPOSE 8000
+EXPOSE 8080
 
 # Sync the project into a new environment, asserting the lockfile is up to date
 RUN uv sync --locked

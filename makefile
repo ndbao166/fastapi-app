@@ -34,4 +34,9 @@ clean:
 run:
 	@echo "🚀 STARTING APPLICATION..."
 	@echo "🌐 Starting FastAPI server..."
-	PYTHONPATH=./ && uv run app/main.py
+	export PYTHONPATH=./ && uv run app/main.py
+
+.PHONY: build
+build:
+	@echo "🚀 BUILDING DOCKER IMAGE..."
+	docker-compose up

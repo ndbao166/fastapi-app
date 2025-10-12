@@ -2,10 +2,12 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from loguru import logger
 
+from app.api import item_router_v1, item_router_v2, user_router_v1, user_router_v2
 from app.core.settings import settings
+from app.dependency import get_query_token
 
 
 @asynccontextmanager
@@ -24,8 +26,19 @@ app = FastAPI(
     description="### Learn FastAPI",
     version="0.1.0",
     lifespan=lifespan,
-    dependencies=[],
+    dependencies=[Depends(get_query_token)],
 )
+
+
+app.include_router(item_router_v1)
+app.include_router(user_router_v1)
+app.include_router(item_router_v2)
+app.include_router(user_router_v2)
+
+
+@app.get("/")
+async def root() -> dict[str, str]:
+    return {"message": "Hello Bigger Applications!"}
 
 
 if __name__ == "__main__":
