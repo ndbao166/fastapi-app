@@ -2,17 +2,17 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import Depends, FastAPI
-from loguru import logger
+from fastapi import FastAPI
 
-from app.api import item_router_v1, item_router_v2, user_router_v1, user_router_v2
+from app.api import user_router_v1
 from app.core.settings import settings
-from app.dependency import get_query_token
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-    from app.settings import clean_app, setup_app
+    from loguru import logger
+
+    from app.setup import clean_app, setup_app
 
     await setup_app()
     logger.info(f"🚀 App has been started: http://{settings.HOST}:{settings.PORT}")
@@ -26,19 +26,16 @@ app = FastAPI(
     description="### Learn FastAPI",
     version="0.1.0",
     lifespan=lifespan,
-    dependencies=[Depends(get_query_token)],
+    dependencies=[],
 )
 
 
-app.include_router(item_router_v1)
 app.include_router(user_router_v1)
-app.include_router(item_router_v2)
-app.include_router(user_router_v2)
 
 
 @app.get("/")
 async def root() -> dict[str, str]:
-    return {"message": "Hello Bigger Applications!"}
+    return {"message": "Hello World!"}
 
 
 if __name__ == "__main__":
