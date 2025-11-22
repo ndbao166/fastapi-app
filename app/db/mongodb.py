@@ -35,10 +35,6 @@ def close_mongodb() -> None:
     logger.info("✅ MongoDB client has been closed.")
 
 
-async def is_mongodb_connected() -> bool:
-    return _Setting.client is not None
-
-
 async def get_db(db_name: str) -> AsyncIOMotorDatabase[Any]:
     if not _Setting.client:
         raise Exception("MongoDB client has not been setup.")
@@ -50,11 +46,5 @@ async def get_db(db_name: str) -> AsyncIOMotorDatabase[Any]:
     return _Setting.client[db_name]
 
 
-async def get_collection(db_name: str, collection_name: str) -> AsyncIOMotorCollection[Any]:
-    db = await get_db(db_name)
-
-    cols = await db.list_collection_names()
-    if collection_name not in cols:
-        raise Exception(f"Collection '{collection_name}' does not exist in database '{db_name}'.")
-
-    return db[collection_name]
+def get_collection(db_name: str, collection_name: str) -> AsyncIOMotorCollection[Any]:
+    return _Setting.client[db_name][collection_name]
